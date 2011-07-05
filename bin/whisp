@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.expand_path('../../lib', __FILE__)
+
+require 'optparse'
+require 'whisp'
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: whisp [OPTION] FILE"
+end.parse!
+
+interpreter = Whisp::Interpreter::Interpreter.new
+ARGV.each do |file_name|
+  File.open(file_name) do |file|
+    interpreter.interpret(file.read)
+  end
+end

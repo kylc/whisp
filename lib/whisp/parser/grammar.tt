@@ -1,0 +1,49 @@
+module Whisp
+  module Parser
+    grammar Whisp
+      rule script
+        expression* <Script>
+      end
+
+      rule expression
+        whitespace? data:(string / number / atom / list) whitespace? <Expression>
+      end
+
+      rule string
+        '"' chars:(!'"' . / '\"')* '"' <String> {
+          def string_value
+            chars.elements.map(&:text_value).join
+          end
+        }
+      end
+
+      rule number
+        ('+' / '-')? [1-9]+ <Number>
+      end
+
+      rule atom
+        first:([a-z] / symbol) rest:([a-z] / symbol / [1-9])* <Atom> {
+          def chars
+            first.text_value + rest.elements.map(&:text_value).join
+          end
+        }
+      end
+
+      rule list
+        '(' first:expression? rest:(expression)* ')' <List> {
+          def expressions
+            [first] + rest.elements
+          end
+        }
+      end
+
+      rule symbol
+        [!$%&*+-./:<=>?@^_~#]+
+      end
+
+      rule whitespace
+        [\s]+
+      end
+    end
+  end
+end
