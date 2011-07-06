@@ -18,7 +18,7 @@ module Whisp
       end
 
       rule number
-        ('+' / '-')? [1-9]+ <Number>
+        ('+' / '-')? [0-9]+ <Number>
       end
 
       rule atom
