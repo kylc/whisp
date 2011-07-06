@@ -10,6 +10,7 @@ module Whisp
       def initialize
         @parser = Parser::Parser.new
         @root_environment = Environment.new
+        @native_function_helper = NativeFunctionHelper.new(self)
 
         load_standard_library
       end
@@ -34,11 +35,11 @@ module Whisp
 
         # There are three basic types of code we will have to handle here: a
         # native function, a definition, or a regular method call.
-        
+
         # This expression can either be a fully evaluated result, i.e. 5, or a
         # nested expression.  We will know that it is nested if it is an array.
         return expression unless expression.is_a? Array
-        
+
         # Determine which type of code this is
         if expression[0] == :native # Native function
           return eval(expression[1])
@@ -52,7 +53,8 @@ module Whisp
           # reference back to this interpreter (the Proc has access to the
           # environment, and the ability to evaluate more code).
           if @root_environment.has_key?(function_name)
-            @root_environment.get(function_name).call(function_arguments, self)
+            native_function = @root_environment.get(function_name)
+            @native_function_helper.instance_exec(function_arguments, self, &native_function)
           else
             raise InterpreterError, "Attempted to call undefined method: " + function_name.to_s
           end

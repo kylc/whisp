@@ -1,39 +1,30 @@
-(def +
+(def eq
   (native "
     lambda do |args, interpreter|
       evaluate_arguments(args)
 
-      args.reduce(:+)
+      first = args[0]
+      args.slice(1, args.length).all? { |x| x == first }
     end
   ")
 )
 
-(def -
+(def <
   (native "
     lambda do |args, interpreter|
       evaluate_arguments(args)
 
-      args.reduce(:-)
+      args[0] < args[1]
     end
   ")
 )
 
-(def *
+(def >
   (native "
     lambda do |args, interpreter|
       evaluate_arguments(args)
 
-      args.reduce(:*)
-    end
-  ")
-)
-
-(def /
-  (native "
-    lambda do |args, interpreter|
-      evaluate_arguments(args)
-
-      args.reduce(:/)
+      args[0] > args[1]
     end
   ")
 )

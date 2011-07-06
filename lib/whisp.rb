@@ -5,6 +5,7 @@ require 'treetop'
 require 'whisp/parser/syntax'
 require 'whisp/parser/parser'
 require 'whisp/interpreter/environment'
+require 'whisp/interpreter/native_function_helper'
 require 'whisp/interpreter/interpreter'
 
 # Treetop now uses the Polyglot gem, so the following require statement will
