@@ -1,4 +1,4 @@
-(def eq
+(def =
   (native "
     lambda do |args, interpreter|
       evaluate_arguments(args)
