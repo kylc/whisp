@@ -17,7 +17,7 @@ describe Whisp::Interpreter do
   end
 
   it "should compare equality" do
-    @interpreter.interpret("(def equal (eq true true))")
+    @interpreter.interpret("(def equal (eq #t #t))")
     @interpreter.root_environment.get(:'equal').should eq(true)
 
     @interpreter.interpret("(def not-equal (eq 4 5))")
