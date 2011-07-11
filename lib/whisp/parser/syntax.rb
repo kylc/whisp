@@ -20,7 +20,7 @@ module Whisp
       end
     end
 
-    # An expression is is either a String, Number, Atom, or List.  
+    # An expression is is either a String, Number, Atom, or List.
     class Expression < Node
       def value
         data.value
