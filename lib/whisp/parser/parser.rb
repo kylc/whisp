@@ -15,6 +15,10 @@ module Whisp
           raise ParserError, @parser.failure_reason
         end
 
+        cascade(tree)
+      end
+
+      def cascade(tree)
         # Ask for the value of the root Node, which will cascade onto every
         # child.  In the end, we will have a super simple Ruby representation of
         # our input, rather than a gigantic AST.

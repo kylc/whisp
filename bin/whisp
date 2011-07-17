@@ -2,6 +2,7 @@
 
 $:.unshift File.expand_path('../../lib', __FILE__)
 
+require 'rubygems'
 require 'optparse'
 require 'whisp'
 
@@ -10,9 +11,11 @@ OptionParser.new do |opts|
   opts.banner = "Usage: whisp [OPTION] FILE"
 end.parse!
 
-interpreter = Whisp::Interpreter::Interpreter.new
+# interpreter = Whisp::Interpreter::Interpreter.new
+compiler = Whisp::Compiler::Compiler.new
 ARGV.each do |file_name|
   File.open(file_name) do |file|
-    interpreter.interpret(file.read)
+    # interpreter.interpret(file.read)
+    compiler.compile(file.read)
   end
 end
